@@ -77,24 +77,67 @@ var Foo = function(){
 }
 Foo.prototype= barProto
 var foo = new Foo()
-console.log(foo.name) // Bar
-			</pre>
+
+console.log(foo.name) // Bar</pre>
 		<p>
 			You can see the the <code>var Foo = function()</code> does not have a <code>name</code> property. However, Bar does have the <code>name</code> property. At runtime JavaScript first tries to get <code>name</code> from foo, it does not exist so it then checks foo's prototype barProto for name. It does exist, so <code>foo.name</code> will get 'Bar' from <code>barProto</code>.
 		</p>
 
 		<p>
-			The most confusing part of this pattern is understanding what the prototype property actually is. It is not like any other property in JavaScript because how the <code>new</code> keyword effects Foo during construction. Remember when <code>new</code> is used <code>this</code> inside the function is the new object that is being created. When the actual new object is created by JavaScript from a function the prototype property of the function is looked at to set the object that is that is  <code>this</code> new object is inherited from. In modern browsers the function's prototype property is the same object that is in the new objects <code>__proto__</code> property. However, in IE &lt; 9 this is not the case.
+			The most confusing part of this pattern is understanding what the prototype property actually is. It is not like any other property in JavaScript because how the <code>new</code> keyword effects Foo during construction. Remember when <code>new</code> is used <code>this</code> inside the function is the new object that is being created and its prototype has already been set. When the actual new object is created by JavaScript from a function the prototype property of the function is looked at to set the object that is that is  <code>this</code> new object is inherited from. In modern browsers the function's prototype property is the same object that is in the new objects <code>__proto__</code> property. However, in IE &lt; 9 this is not the case.
 		</p>
 
 		<h3>__proto__ object property</h3>
 
 		<p>
-			Accessing the <code>__proto__</code> of an object skips the process described in the previous prototype property section.
+			Settings the <code>__proto__</code> property of an object skips the process described in the previous prototype property section and just sets the actual prototype object. Again, this method does not work in older browsers. I believe this method is a lot more transparent than the previous prototype function property method. Also in this method you don't have to use functions as what you inherit from you could just use objects. 
 		</p>
+
+		
+
+		<pre class="prettyprint">
+var Bar = function(){
+   this.name='Bar'
+}
+var barProto = new Bar() 
+var Foo = function(){
+    this.__proto__= barProto
+}
+var foo = new Foo()
+
+console.log(foo.name) // Bar</pre>
+
+		<p>
+			The only difference between this method and the previous example is how the prototype is set. Once the prototype is set, the inheritance chain works exactly the same in runtime. Again, if the object that a property is looked up and it's not there, its prototype will be then checked for the property.
+		</p>
+
+		<p>
+			You can also use the <code>__proto__</code> method without using <code>new</code> at all as follows.
+		</p>
+
+		<pre class="prettyprint">
+var Bar = {
+   name:'Bar'
+}
+var foo = {
+    __proto__: Bar
+}
+
+console.log(foo.name) // Bar</pre>
 
 		<h3>Object.create</h3>
 
+		<p>
+			<code>Object.create</code> is a new way (ECMAScript 5) to implement prototypical inheritance more succinctly. Without setting the <code>__proto__</code> directly, the object that is created from <code>Object.create</code> will have its prototype be the first parameter.  
+		</p>
+
+		<pre class="prettyprint">
+var Bar = {
+   name:'Bar'
+}
+var foo = Object.create(Bar,{});
+
+console.log(foo.name) // Bar</pre>
 		<div>
 </body>
 </html>
