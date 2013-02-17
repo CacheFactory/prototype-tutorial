@@ -24,7 +24,7 @@ These two approaches can be a solution to most problems where inheritance in nee
 
 In prototypical inheritance, inheritance is achieved by looking at an object's prototype if the property does not exist in the given object. The difference between prototypical inheritance and traditional inheritance is that the prototype must be an actual object and not an abstract class. For example, in Java you don't need to create a new object of a class to inherit from, in JavaScript you must create an actual object to set a prototype. 
 
-### prototype function property
+### prototype function property (Constructor pattern)
 
 Setting the prototype property of a function is the most traditional prototype pattern. It should be noted this is the only prototype pattern that works on modern browsers and older IE browsers. 
 
