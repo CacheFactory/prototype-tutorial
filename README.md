@@ -15,6 +15,7 @@ Since the prototype pattern is so confusing, I would recommend against using the
 *   [Prototype.js "Class"][2] A wrapper around JavaScript's prototype that makes JavaScript inheritance more like traditional inheritance. 
 
 These two approaches can be a solution to most problems where inheritance in needed. There are still a few scenarios where using JavaScript's prototype inheritance is the best solution. 
+
 1.  Reducing memory footprint: In the prototype pattern objects that inherit from a prototype share one object.
 2.  Properties of a super class changing after construction.
 3.  To impress people in JavaScript interviews: Since the prototype is so confusing and involves low level knowledge of the language it is often used as a barometer of one's JavaScript knowledge in interviews. 
